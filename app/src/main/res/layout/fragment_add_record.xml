@@ -6,43 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".ui.add_record.AddRecordFragment" >
 
-    <ImageView
+    <EditText
         android:id="@+id/add_record_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/add_record_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@color/cardview_dark_background"
+        android:hint="@string/hint_image_url"
         app:layout_constraintVertical_bias="0.25"
-        android:background="@drawable/round_outline"
-        android:clipToOutline="true"
+        android:background="@drawable/edit_text_background"
+        android:inputType="textUri"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/add_record_name"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="@string/hint_name"
-        android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/add_record_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/edit_text_background"
+        android:inputType="textCapWords"
         app:layout_constraintTop_toBottomOf="@+id/add_record_image" />
 
     <EditText
         android:id="@+id/add_record_description"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:hint="@string/hint_description"
         android:inputType="textMultiLine"
+        android:maxLines="4"
         android:minLines="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/edit_text_background"
         app:layout_constraintTop_toBottomOf="@+id/add_record_name" />
 
     <Button
@@ -51,7 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/title_add_record"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_record_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

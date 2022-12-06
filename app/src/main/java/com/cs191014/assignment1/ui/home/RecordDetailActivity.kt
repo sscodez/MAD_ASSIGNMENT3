@@ -1,16 +1,15 @@
 package com.cs191014.assignment1.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.cs191014.assignment1.R
-import com.cs191014.assignment1.databinding.ActivityMainBinding
 import com.cs191014.assignment1.databinding.ActivityRecordDetailsBinding
-import com.cs191014.assignment1.databinding.FragmentAddRecordBinding
+
 
 class RecordDetailActivity : AppCompatActivity() {
 
@@ -20,6 +19,12 @@ class RecordDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false);
+        val mTitle = toolbar.findViewById<View>(R.id.toolbar_title) as TextView
+        mTitle.text = "Record Details"
 
         val record = intent.getSerializableExtra("record") as? Record
 

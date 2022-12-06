@@ -33,35 +33,27 @@ class AddRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val addRecordViewModel =
-            ViewModelProvider(this)[AddRecordViewModel::class.java]
         val recordsModel = ViewModelProvider(requireActivity())[RecordsModel::class.java]
 
         _binding = FragmentAddRecordBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         val addRecordName: EditText = binding.addRecordName
-        addRecordName.doAfterTextChanged {
-            addRecordViewModel.name = it?.toString() ?: ""
-        }
         val addRecordDescription: EditText = binding.addRecordDescription
-        addRecordDescription.doAfterTextChanged {
-            addRecordViewModel.description = it?.toString() ?: ""
-        }
+        val addRecordImage: EditText = binding.addRecordImage
+
         val addRecordButton: Button = binding.addRecordButton
         addRecordButton.setOnClickListener {
-            val addName = binding.addRecordName
-            val addDescription = binding.addRecordDescription
-            if(addName.text.isNotBlank()) {
+            if(addRecordName.text.isNotBlank()) {
                 val newRecord = Record(
                     Random.nextInt(0, 10000000),
-                    addName.text.toString(),
-                    addDescription.text.toString(),
-                    null
+                    addRecordName.text.toString(),
+                    addRecordDescription.text.toString(),
+                    addRecordImage.text.toString()
                 );
                 recordsModel.addRecord(newRecord)
-                addName.setText("")
-                addDescription.setText("")
+                addRecordName.setText("")
+                addRecordDescription.setText("")
+                addRecordImage.setText("")
             }
         }
 
