@@ -6,18 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.add_record.AddRecordFragment" >
 
-    <ImageView
+    <EditText
         android:id="@+id/add_record_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/add_record_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@color/cardview_dark_background"
         app:layout_constraintVertical_bias="0.25"
-        android:background="@drawable/round_outline"
-        android:clipToOutline="true"
+        android:hint="@string/hint_image"
+        android:minHeight="48dp"
+        android:maxLines="1"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
@@ -27,6 +27,7 @@
         android:layout_marginTop="24dp"
         android:hint="@string/hint_name"
         android:minHeight="48dp"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@+id/add_record_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

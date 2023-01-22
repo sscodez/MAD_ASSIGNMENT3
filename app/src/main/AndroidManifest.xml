@@ -15,7 +15,7 @@
         android:theme="@style/Theme.CS191014Assignment1"
         tools:targetApi="32">
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -29,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.home.RecordDetailActivity"
+            android:name=".ui.RecordDetailActivity"
             android:exported="false"
             android:label="@string/title_add_record" />
         <activity

@@ -1,18 +1,26 @@
-package com.cs191014.assignment1.ui.home
+package com.cs191014.assignment1.ui.records
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cs191014.assignment1.R
 
 
-class RecordAdapter(var mRecords: ArrayList<Record>, val itemClickHandler: (Int) -> Unit) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+class RecordAdapter(
+    var mRecords: ArrayList<Record>,
+    val itemClickHandler: (Int) -> Unit,
+    val deleteHandler: (Int) -> Unit,
+    val updateHandler: (Int) -> Unit,
+    private val context: Context
+) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -23,11 +31,13 @@ class RecordAdapter(var mRecords: ArrayList<Record>, val itemClickHandler: (Int)
         val imageView = itemView.findViewById<ImageView>(R.id.record_image)!!
         val titleTextView = itemView.findViewById<TextView>(R.id.record_name)!!
         val subtitleTextView = itemView.findViewById<TextView>(R.id.record_description)!!
+        val favButton = itemView.findViewById<ImageButton>(R.id.favButton)!!
+        val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)!!
     }
 
     // ... constructor and member variables
     // Usually involves inflating a layout from XML and returning the holder
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         // Inflate the custom layout
@@ -35,18 +45,30 @@ class RecordAdapter(var mRecords: ArrayList<Record>, val itemClickHandler: (Int)
         val viewHolder = ViewHolder(recordView)
 
         viewHolder.cardView.setOnClickListener(View.OnClickListener() {
-            Log.i("Index", "${viewHolder.adapterPosition}")
-            if(viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
+            if (viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
                 itemClickHandler(viewHolder.adapterPosition)
             }
-        } );
+        });
+        viewHolder.favButton.setOnClickListener {
+            if (viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
+                updateHandler(viewHolder.adapterPosition)
+            }
+            notifyItemChanged(viewHolder.adapterPosition)
+        }
+        val deleteButton = viewHolder.deleteButton
+        deleteButton.setOnClickListener {
+            if (viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
+                deleteHandler(viewHolder.adapterPosition)
+            }
+            notifyItemRemoved(viewHolder.adapterPosition)
+        }
 
         // Return a new holder instance
         return viewHolder
     }
 
     // Involves populating data into the item through holder
-    override fun onBindViewHolder(viewHolder: RecordAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get the data model based on position
         val record: Record = mRecords[position]
         // Set item views based on your views and data model
@@ -61,11 +83,13 @@ class RecordAdapter(var mRecords: ArrayList<Record>, val itemClickHandler: (Int)
         titleTextView.text = record.name
         val subtitleTextView = viewHolder.subtitleTextView
         subtitleTextView.text = record.description
-    }
 
-    fun addRecord(newRecord: Record) {
-        mRecords.add(newRecord)
-        notifyItemInserted(mRecords.size)
+        val favButton = viewHolder.favButton
+        favButton.setColorFilter(
+            ContextCompat.getColor(
+                context,
+                if(record.isFav) R.color.red else R.color.grey
+            ))
     }
 
     // Returns the total count of items in the list

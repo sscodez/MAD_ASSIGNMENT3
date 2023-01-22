@@ -2,8 +2,9 @@
     <string name="app_name">MAD Assignment</string>
     <string name="title_home">Home</string>
     <string name="title_add_record">Add Record</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_favorites">Favorites</string>
     <string name="title_activity_record">RecordActivity</string>
+    <string name="hint_image">Image Url</string>
     <string name="hint_name">Name</string>
     <string name="hint_description">Description</string>
 </resources>

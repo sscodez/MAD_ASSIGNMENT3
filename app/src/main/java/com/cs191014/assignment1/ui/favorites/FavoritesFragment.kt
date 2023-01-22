@@ -1,8 +1,7 @@
-package com.cs191014.assignment1.ui.home
+package com.cs191014.assignment1.ui.favorites
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,7 @@ import com.cs191014.assignment1.ui.records.RecordsModel
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
-
-class HomeFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,19 +25,18 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Lookup the recyclerview in activity layout
-        val view: View = inflater.inflate(R.layout.fragment_home, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_favorites, container, false)
         val rvRecords = view.findViewById(R.id.rvRecords) as RecyclerView
         // Initialize records
         val recordsModel: RecordsModel =
             ViewModelProvider(requireActivity())[RecordsModel::class.java]
-//      Create adapter passing in the sample user data
         lifecycleScope.launch {
             if (recordsModel.records.value == null) {
                 recordsModel.loadRecords(context!!)
             }
             // Create adapter passing in the sample user data
             val adapter = RecordAdapter(
-                recordsModel.records.value!!,
+                ArrayList(recordsModel.records.value!!.filter { record -> record.isFav }),
                 ::onRecordClickHandler,
                 ::onRecordDeleted,
                 ::onRecordUpdated,
@@ -50,6 +47,7 @@ class HomeFragment : Fragment() {
             // Set layout manager to position the items
             rvRecords.layoutManager = LinearLayoutManager(view.context)
         }
+
         // That's all!
         return view
     }
@@ -59,16 +57,23 @@ class HomeFragment : Fragment() {
             val intent = Intent(it, RecordDetailActivity::class.java)
             intent.putExtra(
                 "record",
-                ViewModelProvider(requireActivity())[RecordsModel::class.java].records.value!![position] as Serializable
+                ViewModelProvider(requireActivity())[RecordsModel::class.java].records.value!!.filter { record -> record.isFav }[position] as Serializable
             )
             it.startActivityFromFragment(this, intent, 1)
         }
     }
 
     private fun onRecordDeleted(position: Int) {
-        ViewModelProvider(requireActivity())[RecordsModel::class.java].deleteRecord(position, context!!)
+        ViewModelProvider(requireActivity())[RecordsModel::class.java].deleteRecord(
+            position,
+            context!!
+        )
     }
+
     private fun onRecordUpdated(position: Int) {
-        ViewModelProvider(requireActivity())[RecordsModel::class.java].markFavorite(position, context!!)
+        ViewModelProvider(requireActivity())[RecordsModel::class.java].markFavorite(
+            position,
+            context!!
+        )
     }
 }
