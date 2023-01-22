@@ -31,7 +31,7 @@
         <activity
             android:name=".ui.RecordDetailActivity"
             android:exported="false"
-            android:label="@string/title_add_record" />
+            android:label="@string/title_record_details" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
