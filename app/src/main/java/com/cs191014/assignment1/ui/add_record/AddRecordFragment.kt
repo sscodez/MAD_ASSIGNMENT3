@@ -24,6 +24,8 @@ class AddRecordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val addRecordViewModel =
+            ViewModelProvider(this)[AddRecordViewModel::class.java]
         val recordsModel = ViewModelProvider(requireActivity())[RecordsModel::class.java]
 
         _binding = FragmentAddRecordBinding.inflate(inflater, container, false)
@@ -38,9 +40,13 @@ class AddRecordFragment : Fragment() {
             addRecordViewModel.image = newUrl
         }
         val addRecordName: EditText = binding.addRecordName
+        addRecordName.doAfterTextChanged {
+            addRecordViewModel.name = it?.toString() ?: ""
+        }
         val addRecordDescription: EditText = binding.addRecordDescription
-        val addRecordImage: EditText = binding.addRecordImage
-
+        addRecordDescription.doAfterTextChanged {
+            addRecordViewModel.description = it?.toString() ?: ""
+        }
         val addRecordButton: Button = binding.addRecordButton
         addRecordButton.setOnClickListener {
             val addImage = binding.addRecordImage

@@ -1,7 +1,7 @@
 package com.cs191014.assignment1.ui
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -17,12 +17,6 @@ class RecordDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false);
-        val mTitle = toolbar.findViewById<View>(R.id.toolbar_title) as TextView
-        mTitle.text = "Record Details"
 
         val record = intent.getSerializableExtra("record") as? Record
 
