@@ -10,9 +10,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.cs191014.assignment1.databinding.FragmentAddRecordBinding
-import com.cs191014.assignment1.ui.records.Record
-import com.cs191014.assignment1.ui.records.RecordsModel
-import kotlin.random.Random
 
 class AddRecordFragment : Fragment() {
     private var _binding: FragmentAddRecordBinding? = null
@@ -26,7 +23,6 @@ class AddRecordFragment : Fragment() {
     ): View {
         val addRecordViewModel =
             ViewModelProvider(this)[AddRecordViewModel::class.java]
-        val recordsModel = ViewModelProvider(requireActivity())[RecordsModel::class.java]
 
         _binding = FragmentAddRecordBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,26 +45,14 @@ class AddRecordFragment : Fragment() {
         }
         val addRecordButton: Button = binding.addRecordButton
         addRecordButton.setOnClickListener {
-            val addImage = binding.addRecordImage
-            val addName = binding.addRecordName
-            val addDescription = binding.addRecordDescription
-            if (addRecordViewModel.name.isNotBlank()) {
-                val newRecord = Record(
-                    Random.nextInt(0, 10000000),
-                    addRecordViewModel.name,
-                    addRecordViewModel.description,
-                    addRecordViewModel.image,
-                    false,
-                );
-                recordsModel.addRecord(newRecord, context!!)
-                addImage.setText("")
-                addName.setText("")
-                addDescription.setText("")
+            if (addRecordViewModel.addRecord(requireActivity())) {
+                binding.addRecordImage.setText("")
+                binding.addRecordName.setText("")
+                binding.addRecordDescription.setText("")
             }
         }
 
         return root
-
     }
 
     override fun onDestroyView() {

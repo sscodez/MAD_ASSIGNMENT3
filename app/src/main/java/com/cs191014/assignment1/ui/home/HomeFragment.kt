@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cs191014.assignment1.R
 import com.cs191014.assignment1.ui.RecordDetailActivity
+import com.cs191014.assignment1.ui.records.Record
 import com.cs191014.assignment1.ui.records.RecordAdapter
 import com.cs191014.assignment1.ui.records.RecordsModel
 import kotlinx.coroutines.launch
@@ -41,8 +42,8 @@ class HomeFragment : Fragment() {
             val adapter = RecordAdapter(
                 recordsModel.records.value!!,
                 ::onRecordClickHandler,
-                ::onRecordDeleted,
-                ::onRecordUpdated,
+                recordsModel::deleteRecord,
+                recordsModel::markFavorite,
                 context!!
             )
             // Attach the adapter to the recyclerview to populate items
@@ -54,21 +55,21 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun onRecordClickHandler(position: Int) {
+    private fun onRecordClickHandler(record: Record) {
         activity?.let {
             val intent = Intent(it, RecordDetailActivity::class.java)
             intent.putExtra(
                 "record",
-                ViewModelProvider(requireActivity())[RecordsModel::class.java].records.value!![position] as Serializable
+                record as Serializable
             )
             it.startActivityFromFragment(this, intent, 1)
         }
     }
 
-    private fun onRecordDeleted(position: Int) {
-        ViewModelProvider(requireActivity())[RecordsModel::class.java].deleteRecord(position, context!!)
-    }
-    private fun onRecordUpdated(position: Int) {
-        ViewModelProvider(requireActivity())[RecordsModel::class.java].markFavorite(position, context!!)
-    }
+//    private fun onRecordDeleted(position: Int) {
+//        ViewModelProvider(requireActivity())[RecordsModel::class.java].deleteRecord(position, context!!)
+//    }
+//    private fun onRecordUpdated(position: Int) {
+//        ViewModelProvider(requireActivity())[RecordsModel::class.java].markFavorite(position, context!!)
+//    }
 }

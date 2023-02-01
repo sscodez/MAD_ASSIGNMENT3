@@ -27,14 +27,14 @@ class RecordsModel : ViewModel() {
     }
 
 
-    fun markFavorite(index: Int, context: Context) {
-        val updatedRecord = recordsList.value!![index]
-        updatedRecord.isFav = !updatedRecord.isFav;
-        Log.i("updated", updatedRecord.isFav.toString())
+    fun markFavorite(record: Record, context: Context) {
+//        val updatedRecord = recordsList.value!![index]
+        record.isFav = !record.isFav;
+        Log.i("updated", record.isFav.toString())
         viewModelScope.launch {
             val db = RecordDatabase.getInstance(context.applicationContext)
             db.transactionExecutor.execute {
-                db.recordDao().update(updatedRecord)
+                db.recordDao().update(record)
             }
         }
     }
@@ -51,14 +51,14 @@ class RecordsModel : ViewModel() {
         }
     }
 
-    fun deleteRecord(index: Int, context: Context) {
+    fun deleteRecord(record: Record, context: Context) {
         var tempList = recordsList.value
-        val deletedRecord = tempList?.removeAt(index)
+        val deleted = tempList?.remove(record)
         recordsList.value = tempList ?: ArrayList()
         viewModelScope.launch {
             val db = RecordDatabase.getInstance(context.applicationContext)
             db.transactionExecutor.execute {
-                db.recordDao().delete(deletedRecord!!)
+                db.recordDao().delete(record)
             }
         }
     }
