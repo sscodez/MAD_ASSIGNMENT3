@@ -1,7 +1,6 @@
 package com.cs191014.assignment1.ui.records
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cs191014.assignment1.R
 
 
 class RecordAdapter(
-    var mRecords: ArrayList<Record>,
+    private var mRecords: ArrayList<Record>,
     val itemClickHandler: (Record) -> Unit,
     val deleteHandler: (Record, Context) -> Unit,
     val updateHandler: (Record, Context) -> Unit,
@@ -45,11 +43,11 @@ class RecordAdapter(
         // Inflate the custom layout
         val recordView = inflater.inflate(R.layout.item_record, parent, false)
         val viewHolder = ViewHolder(recordView)
-        viewHolder.cardView.setOnClickListener(View.OnClickListener() {
+        viewHolder.cardView.setOnClickListener {
             if (viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
                 itemClickHandler(mRecords[viewHolder.adapterPosition])
             }
-        });
+        }
         viewHolder.favButton.setOnClickListener {
             if (viewHolder.adapterPosition >= 0 && viewHolder.adapterPosition < mRecords.size) {
                 updateHandler(mRecords[viewHolder.adapterPosition], context)

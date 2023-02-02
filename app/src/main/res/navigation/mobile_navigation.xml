@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_add_record"
         android:name="com.cs191014.assignment1.ui.add_record.AddRecordFragment"
         android:label="@string/title_add_record"
         tools:layout="@layout/fragment_add_record" />
@@ -22,4 +22,14 @@
         android:name="com.cs191014.assignment1.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/navigation_news"
+        android:name="com.cs191014.assignment1.ui.news.NewsFragment"
+        android:label="@string/title_news"
+        tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.cs191014.assignment1.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

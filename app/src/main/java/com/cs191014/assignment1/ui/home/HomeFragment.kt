@@ -65,11 +65,4 @@ class HomeFragment : Fragment() {
             it.startActivityFromFragment(this, intent, 1)
         }
     }
-
-//    private fun onRecordDeleted(position: Int) {
-//        ViewModelProvider(requireActivity())[RecordsModel::class.java].deleteRecord(position, context!!)
-//    }
-//    private fun onRecordUpdated(position: Int) {
-//        ViewModelProvider(requireActivity())[RecordsModel::class.java].markFavorite(position, context!!)
-//    }
 }

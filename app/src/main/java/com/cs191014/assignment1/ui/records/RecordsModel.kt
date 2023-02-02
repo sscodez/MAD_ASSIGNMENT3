@@ -20,7 +20,7 @@ class RecordsModel : ViewModel() {
 //    }
 
     suspend fun loadRecords(context: Context): Unit {
-        val db = RecordDatabase.getInstance(context!!.applicationContext)
+        val db = RecordDatabase.getInstance(context.applicationContext)
         val recordDao = db.recordDao()
         val records = recordDao.getAll()
         recordsList.value = ArrayList(records);
@@ -53,7 +53,6 @@ class RecordsModel : ViewModel() {
 
     fun deleteRecord(record: Record, context: Context) {
         var tempList = recordsList.value
-        val deleted = tempList?.remove(record)
         recordsList.value = tempList ?: ArrayList()
         viewModelScope.launch {
             val db = RecordDatabase.getInstance(context.applicationContext)
